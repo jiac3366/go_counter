@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package go_counter;
+option go_package="./go_counter";
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+
+service Go_counter {
+  rpc Ping(Request) returns(Response);
+}
