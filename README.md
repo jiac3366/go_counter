@@ -16,3 +16,9 @@
       2. singlefight 
 
     
+### 
+1. define ddl sql
+2. goctl model mysql ddl --src model/ddl.sql --dir .
+3. define .proto file
+4. goctl rpc protoc go_counter.proto --go_out=. --go-grpc_out=. --zrpc_out=.
+5. 

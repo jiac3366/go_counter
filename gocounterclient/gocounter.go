@@ -13,11 +13,23 @@ import (
 )
 
 type (
-	Request  = go_counter.Request
-	Response = go_counter.Response
+	FavoriteRequest  = go_counter.FavoriteRequest
+	FavoriteResponse = go_counter.FavoriteResponse
+	LikeRequest      = go_counter.LikeRequest
+	LikeResponse     = go_counter.LikeResponse
+	PingRequest      = go_counter.PingRequest
+	PingResponse     = go_counter.PingResponse
+	ViewRequest      = go_counter.ViewRequest
+	ViewResponse     = go_counter.ViewResponse
 
 	GoCounter interface {
-		Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+		Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error)
+		// 点赞请求
+		Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error)
+		// 收藏请求
+		Collect(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error)
+		// 浏览请求
+		View(ctx context.Context, in *ViewRequest, opts ...grpc.CallOption) (*ViewResponse, error)
 	}
 
 	defaultGoCounter struct {
@@ -31,7 +43,25 @@ func NewGoCounter(cli zrpc.Client) GoCounter {
 	}
 }
 
-func (m *defaultGoCounter) Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (m *defaultGoCounter) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error) {
 	client := go_counter.NewGoCounterClient(m.cli.Conn())
 	return client.Ping(ctx, in, opts...)
+}
+
+// 点赞请求
+func (m *defaultGoCounter) Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error) {
+	client := go_counter.NewGoCounterClient(m.cli.Conn())
+	return client.Like(ctx, in, opts...)
+}
+
+// 收藏请求
+func (m *defaultGoCounter) Collect(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error) {
+	client := go_counter.NewGoCounterClient(m.cli.Conn())
+	return client.Collect(ctx, in, opts...)
+}
+
+// 浏览请求
+func (m *defaultGoCounter) View(ctx context.Context, in *ViewRequest, opts ...grpc.CallOption) (*ViewResponse, error) {
+	client := go_counter.NewGoCounterClient(m.cli.Conn())
+	return client.View(ctx, in, opts...)
 }

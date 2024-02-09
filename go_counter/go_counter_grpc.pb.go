@@ -19,14 +19,23 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	GoCounter_Ping_FullMethodName = "/go_counter.Go_counter/Ping"
+	GoCounter_Ping_FullMethodName    = "/go_counter.Go_counter/Ping"
+	GoCounter_Like_FullMethodName    = "/go_counter.Go_counter/Like"
+	GoCounter_Collect_FullMethodName = "/go_counter.Go_counter/Collect"
+	GoCounter_View_FullMethodName    = "/go_counter.Go_counter/View"
 )
 
 // GoCounterClient is the client API for GoCounter service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GoCounterClient interface {
-	Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error)
+	// 点赞请求
+	Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error)
+	// 收藏请求
+	Collect(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error)
+	// 浏览请求
+	View(ctx context.Context, in *ViewRequest, opts ...grpc.CallOption) (*ViewResponse, error)
 }
 
 type goCounterClient struct {
@@ -37,9 +46,36 @@ func NewGoCounterClient(cc grpc.ClientConnInterface) GoCounterClient {
 	return &goCounterClient{cc}
 }
 
-func (c *goCounterClient) Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
+func (c *goCounterClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error) {
+	out := new(PingResponse)
 	err := c.cc.Invoke(ctx, GoCounter_Ping_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *goCounterClient) Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error) {
+	out := new(LikeResponse)
+	err := c.cc.Invoke(ctx, GoCounter_Like_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *goCounterClient) Collect(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error) {
+	out := new(FavoriteResponse)
+	err := c.cc.Invoke(ctx, GoCounter_Collect_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *goCounterClient) View(ctx context.Context, in *ViewRequest, opts ...grpc.CallOption) (*ViewResponse, error) {
+	out := new(ViewResponse)
+	err := c.cc.Invoke(ctx, GoCounter_View_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +86,13 @@ func (c *goCounterClient) Ping(ctx context.Context, in *Request, opts ...grpc.Ca
 // All implementations must embed UnimplementedGoCounterServer
 // for forward compatibility
 type GoCounterServer interface {
-	Ping(context.Context, *Request) (*Response, error)
+	Ping(context.Context, *PingRequest) (*PingResponse, error)
+	// 点赞请求
+	Like(context.Context, *LikeRequest) (*LikeResponse, error)
+	// 收藏请求
+	Collect(context.Context, *FavoriteRequest) (*FavoriteResponse, error)
+	// 浏览请求
+	View(context.Context, *ViewRequest) (*ViewResponse, error)
 	mustEmbedUnimplementedGoCounterServer()
 }
 
@@ -58,8 +100,17 @@ type GoCounterServer interface {
 type UnimplementedGoCounterServer struct {
 }
 
-func (UnimplementedGoCounterServer) Ping(context.Context, *Request) (*Response, error) {
+func (UnimplementedGoCounterServer) Ping(context.Context, *PingRequest) (*PingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedGoCounterServer) Like(context.Context, *LikeRequest) (*LikeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Like not implemented")
+}
+func (UnimplementedGoCounterServer) Collect(context.Context, *FavoriteRequest) (*FavoriteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Collect not implemented")
+}
+func (UnimplementedGoCounterServer) View(context.Context, *ViewRequest) (*ViewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method View not implemented")
 }
 func (UnimplementedGoCounterServer) mustEmbedUnimplementedGoCounterServer() {}
 
@@ -75,7 +126,7 @@ func RegisterGoCounterServer(s grpc.ServiceRegistrar, srv GoCounterServer) {
 }
 
 func _GoCounter_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
+	in := new(PingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -87,7 +138,61 @@ func _GoCounter_Ping_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: GoCounter_Ping_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoCounterServer).Ping(ctx, req.(*Request))
+		return srv.(GoCounterServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GoCounter_Like_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LikeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoCounterServer).Like(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GoCounter_Like_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoCounterServer).Like(ctx, req.(*LikeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GoCounter_Collect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FavoriteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoCounterServer).Collect(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GoCounter_Collect_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoCounterServer).Collect(ctx, req.(*FavoriteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GoCounter_View_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoCounterServer).View(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GoCounter_View_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoCounterServer).View(ctx, req.(*ViewRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -102,6 +207,18 @@ var GoCounter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _GoCounter_Ping_Handler,
+		},
+		{
+			MethodName: "Like",
+			Handler:    _GoCounter_Like_Handler,
+		},
+		{
+			MethodName: "Collect",
+			Handler:    _GoCounter_Collect_Handler,
+		},
+		{
+			MethodName: "View",
+			Handler:    _GoCounter_View_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

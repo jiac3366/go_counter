@@ -22,7 +22,25 @@ func NewGoCounterServer(svcCtx *svc.ServiceContext) *GoCounterServer {
 	}
 }
 
-func (s *GoCounterServer) Ping(ctx context.Context, in *go_counter.Request) (*go_counter.Response, error) {
+func (s *GoCounterServer) Ping(ctx context.Context, in *go_counter.PingRequest) (*go_counter.PingResponse, error) {
 	l := logic.NewPingLogic(ctx, s.svcCtx)
 	return l.Ping(in)
+}
+
+// 点赞请求
+func (s *GoCounterServer) Like(ctx context.Context, in *go_counter.LikeRequest) (*go_counter.LikeResponse, error) {
+	l := logic.NewLikeLogic(ctx, s.svcCtx)
+	return l.Like(in)
+}
+
+// 收藏请求
+func (s *GoCounterServer) Collect(ctx context.Context, in *go_counter.FavoriteRequest) (*go_counter.FavoriteResponse, error) {
+	l := logic.NewCollectLogic(ctx, s.svcCtx)
+	return l.Collect(in)
+}
+
+// 浏览请求
+func (s *GoCounterServer) View(ctx context.Context, in *go_counter.ViewRequest) (*go_counter.ViewResponse, error) {
+	l := logic.NewViewLogic(ctx, s.svcCtx)
+	return l.View(in)
 }
