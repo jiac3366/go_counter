@@ -23,8 +23,8 @@ func NewPingLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PingLogic {
 	}
 }
 
-func (l *PingLogic) Ping(in *go_counter.Request) (*go_counter.Response, error) {
-	return &go_counter.Response{
+func (l *PingLogic) Ping(in *go_counter.PingRequest) (*go_counter.PingResponse, error) {
+	return &go_counter.PingResponse{
 		Pong: "pong",
 	}, nil
 }
