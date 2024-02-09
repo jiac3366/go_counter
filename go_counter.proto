@@ -3,14 +3,53 @@ syntax = "proto3";
 package go_counter;
 option go_package="./go_counter";
 
-message Request {
+message PingRequest {
   string ping = 1;
 }
 
-message Response {
+message PingResponse {
   string pong = 1;
 }
 
-service Go_counter {
-  rpc Ping(Request) returns(Response);
+
+message LikeRequest {
+  string user_id = 1;
+  string content_id = 2;
 }
+
+message LikeResponse {
+  bool success = 1;
+}
+
+message FavoriteRequest {
+  string user_id = 1;
+  string content_id = 2;
+}
+
+message FavoriteResponse {
+  bool success = 1;
+}
+
+message ViewRequest {
+  string user_id = 1;
+  string content_id = 2;
+}
+
+message ViewResponse {
+  bool success = 1;
+}
+
+
+service Go_counter {
+  rpc Ping(PingRequest) returns(PingResponse);
+
+  // 点赞请求
+  rpc Like(LikeRequest) returns (LikeResponse);
+
+  // 收藏请求
+  rpc Collect(FavoriteRequest) returns (FavoriteResponse);
+
+  // 浏览请求
+  rpc View(ViewRequest) returns (ViewResponse);
+}
+
