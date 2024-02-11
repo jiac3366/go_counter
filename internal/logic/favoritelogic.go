@@ -1,5 +1,7 @@
 package logic
 
+//package main
+
 import (
 	"context"
 
@@ -26,6 +28,7 @@ func NewFavoriteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Favorite
 // 收藏请求
 func (l *FavoriteLogic) Favorite(in *go_counter.FavoriteRequest) (*go_counter.FavoriteResponse, error) {
 	// todo: add your logic here and delete this line
-
+	entry, _ := l.svcCtx.FavoritesModel.FindOne(l.ctx, 1)
+	logx.Infov(entry)
 	return &go_counter.FavoriteResponse{}, nil
 }
