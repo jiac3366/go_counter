@@ -7,5 +7,9 @@ Mode: dev
 #  Key: gocounter.rpc
 
 
-MysqlConn:
+MysqlConf:
   DSN: root:123456@tcp(127.0.0.1:3306)?charset=utf8&parseTime=True&loc=Local
+
+
+RedisConf:
+  - Host: 127.0.0.1:6379

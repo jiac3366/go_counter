@@ -57,7 +57,7 @@ CREATE TABLE favorites
     PRIMARY KEY (favorite_id)
 );
 ```
-2. goctl model mysql ddl --src model/ddl.sql --dir .
+2. cd model/mysql && goctl model mysql ddl --src ddl.sql --dir . -c
 3. define .proto file
 ```protobuf
 syntax = "proto3";

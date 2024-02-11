@@ -14,11 +14,12 @@ type ServiceContext struct {
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
-	conn := sqlx.NewMysql(c.MysqlConn.DSN)
+	mysqlConn := sqlx.NewMysql(c.MysqlConf.DSN)
+
 	return &ServiceContext{
 		Config:         c,
-		FavoritesModel: mysql.NewFavoritesModel(conn),
-		ArticleModel:   mysql.NewArticleModel(conn),
-		LikesModel:     mysql.NewLikesModel(conn),
+		FavoritesModel: mysql.NewFavoritesModel(mysqlConn, c.RedisConf),
+		ArticleModel:   mysql.NewArticleModel(mysqlConn, c.RedisConf),
+		LikesModel:     mysql.NewLikesModel(mysqlConn, c.RedisConf),
 	}
 }
