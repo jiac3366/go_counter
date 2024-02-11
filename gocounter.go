@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-
 	"go_counter/go_counter"
 	"go_counter/internal/config"
 	"go_counter/internal/server"
@@ -32,6 +31,7 @@ func main() {
 			reflection.Register(grpcServer)
 		}
 	})
+	// todo:"err":"context deadline exceeded","level":"error"}
 	defer s.Stop()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)

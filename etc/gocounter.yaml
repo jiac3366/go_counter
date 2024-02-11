@@ -8,7 +8,7 @@ Mode: dev
 
 
 MysqlConf:
-  DSN: root:123456@tcp(127.0.0.1:3306)?charset=utf8&parseTime=True&loc=Local
+  DSN: root:123456@tcp(127.0.0.1:3306)/go_counter?charset=utf8&parseTime=True&loc=Local
 
 
 RedisConf:

@@ -4,6 +4,7 @@ package logic
 
 import (
 	"context"
+	"go_counter/model/mysql"
 
 	"go_counter/go_counter"
 	"go_counter/internal/svc"
@@ -27,8 +28,18 @@ func NewFavoriteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Favorite
 
 // 收藏请求
 func (l *FavoriteLogic) Favorite(in *go_counter.FavoriteRequest) (*go_counter.FavoriteResponse, error) {
-	// todo: add your logic here and delete this line
-	entry, _ := l.svcCtx.FavoritesModel.FindOne(l.ctx, 1)
-	logx.Infov(entry)
-	return &go_counter.FavoriteResponse{}, nil
+	userId := in.UserId
+	articleId := in.ArticleId
+	if _, err := l.svcCtx.FavoritesModel.Insert(
+		l.ctx,
+		&mysql.Favorites{
+			UserId:    userId,
+			ArticleId: articleId,
+		},
+	); err != nil {
+		logx.Errorw("FavoritesModel.Insert failed", logx.Field("err", err.Error()))
+		return &go_counter.FavoriteResponse{Success: false}, nil
+	}
+
+	return &go_counter.FavoriteResponse{Success: true}, nil
 }
