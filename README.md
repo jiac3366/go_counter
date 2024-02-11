@@ -109,7 +109,7 @@ service Go_counter {
   rpc Like(LikeRequest) returns (LikeResponse);
 
   // 收藏请求
-  rpc Collect(FavoriteRequest) returns (FavoriteResponse);
+  rpc Favorite(FavoriteRequest) returns (FavoriteResponse);
 
   // 浏览请求
   rpc View(ViewRequest) returns (ViewResponse);
