@@ -18,7 +18,103 @@
     
 ### 
 1. define ddl sql
+```sql
+-- 用户信息表
+CREATE TABLE user
+(
+    user_id  bigint AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL DEFAULT '',
+    PRIMARY KEY (user_id)
+);
+
+-- 文章信息表
+CREATE TABLE article
+(
+    article_id bigint AUTO_INCREMENT,
+    title      VARCHAR(255) NOT NULL DEFAULT '',
+    content    TEXT         NOT NULL DEFAULT '',
+    author_id  bigint       NOT NULL,
+    PRIMARY KEY (article_id)
+);
+
+-- 点赞信息表
+CREATE TABLE likes
+(
+    like_id    bigint AUTO_INCREMENT,
+    user_id    bigint NOT NULL,
+    article_id bigint NOT NULL,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    PRIMARY KEY (article_id)
+);
+
+-- 收藏信息表
+CREATE TABLE favorites
+(
+    favorite_id bigint AUTO_INCREMENT,
+    user_id     bigint NOT NULL,
+    article_id  bigint NOT NULL,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    PRIMARY KEY (favorite_id)
+);
+```
 2. goctl model mysql ddl --src model/ddl.sql --dir .
 3. define .proto file
+```protobuf
+syntax = "proto3";
+
+package go_counter;
+option go_package="./go_counter";
+
+message PingRequest {
+  string ping = 1;
+}
+
+message PingResponse {
+  string pong = 1;
+}
+
+
+message LikeRequest {
+  string user_id = 1;
+  string content_id = 2;
+}
+
+message LikeResponse {
+  bool success = 1;
+}
+
+message FavoriteRequest {
+  string user_id = 1;
+  string content_id = 2;
+}
+
+message FavoriteResponse {
+  bool success = 1;
+}
+
+message ViewRequest {
+  string user_id = 1;
+  string content_id = 2;
+}
+
+message ViewResponse {
+  bool success = 1;
+}
+
+
+service Go_counter {
+  rpc Ping(PingRequest) returns(PingResponse);
+
+  // 点赞请求
+  rpc Like(LikeRequest) returns (LikeResponse);
+
+  // 收藏请求
+  rpc Collect(FavoriteRequest) returns (FavoriteResponse);
+
+  // 浏览请求
+  rpc View(ViewRequest) returns (ViewResponse);
+}
+
+```
 4. goctl rpc protoc go_counter.proto --go_out=. --go-grpc_out=. --zrpc_out=.
 5. 

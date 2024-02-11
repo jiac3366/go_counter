@@ -34,9 +34,9 @@ func (s *GoCounterServer) Like(ctx context.Context, in *go_counter.LikeRequest) 
 }
 
 // 收藏请求
-func (s *GoCounterServer) Collect(ctx context.Context, in *go_counter.FavoriteRequest) (*go_counter.FavoriteResponse, error) {
-	l := logic.NewCollectLogic(ctx, s.svcCtx)
-	return l.Collect(in)
+func (s *GoCounterServer) Favorite(ctx context.Context, in *go_counter.FavoriteRequest) (*go_counter.FavoriteResponse, error) {
+	l := logic.NewFavoriteLogic(ctx, s.svcCtx)
+	return l.Favorite(in)
 }
 
 // 浏览请求

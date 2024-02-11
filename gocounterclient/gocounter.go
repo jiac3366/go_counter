@@ -27,7 +27,7 @@ type (
 		// 点赞请求
 		Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error)
 		// 收藏请求
-		Collect(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error)
+		Favorite(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error)
 		// 浏览请求
 		View(ctx context.Context, in *ViewRequest, opts ...grpc.CallOption) (*ViewResponse, error)
 	}
@@ -55,9 +55,9 @@ func (m *defaultGoCounter) Like(ctx context.Context, in *LikeRequest, opts ...gr
 }
 
 // 收藏请求
-func (m *defaultGoCounter) Collect(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error) {
+func (m *defaultGoCounter) Favorite(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error) {
 	client := go_counter.NewGoCounterClient(m.cli.Conn())
-	return client.Collect(ctx, in, opts...)
+	return client.Favorite(ctx, in, opts...)
 }
 
 // 浏览请求

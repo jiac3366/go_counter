@@ -19,10 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	GoCounter_Ping_FullMethodName    = "/go_counter.Go_counter/Ping"
-	GoCounter_Like_FullMethodName    = "/go_counter.Go_counter/Like"
-	GoCounter_Collect_FullMethodName = "/go_counter.Go_counter/Collect"
-	GoCounter_View_FullMethodName    = "/go_counter.Go_counter/View"
+	GoCounter_Ping_FullMethodName     = "/go_counter.Go_counter/Ping"
+	GoCounter_Like_FullMethodName     = "/go_counter.Go_counter/Like"
+	GoCounter_Favorite_FullMethodName = "/go_counter.Go_counter/Favorite"
+	GoCounter_View_FullMethodName     = "/go_counter.Go_counter/View"
 )
 
 // GoCounterClient is the client API for GoCounter service.
@@ -33,7 +33,7 @@ type GoCounterClient interface {
 	// 点赞请求
 	Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error)
 	// 收藏请求
-	Collect(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error)
+	Favorite(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error)
 	// 浏览请求
 	View(ctx context.Context, in *ViewRequest, opts ...grpc.CallOption) (*ViewResponse, error)
 }
@@ -64,9 +64,9 @@ func (c *goCounterClient) Like(ctx context.Context, in *LikeRequest, opts ...grp
 	return out, nil
 }
 
-func (c *goCounterClient) Collect(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error) {
+func (c *goCounterClient) Favorite(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error) {
 	out := new(FavoriteResponse)
-	err := c.cc.Invoke(ctx, GoCounter_Collect_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, GoCounter_Favorite_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ type GoCounterServer interface {
 	// 点赞请求
 	Like(context.Context, *LikeRequest) (*LikeResponse, error)
 	// 收藏请求
-	Collect(context.Context, *FavoriteRequest) (*FavoriteResponse, error)
+	Favorite(context.Context, *FavoriteRequest) (*FavoriteResponse, error)
 	// 浏览请求
 	View(context.Context, *ViewRequest) (*ViewResponse, error)
 	mustEmbedUnimplementedGoCounterServer()
@@ -106,8 +106,8 @@ func (UnimplementedGoCounterServer) Ping(context.Context, *PingRequest) (*PingRe
 func (UnimplementedGoCounterServer) Like(context.Context, *LikeRequest) (*LikeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Like not implemented")
 }
-func (UnimplementedGoCounterServer) Collect(context.Context, *FavoriteRequest) (*FavoriteResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Collect not implemented")
+func (UnimplementedGoCounterServer) Favorite(context.Context, *FavoriteRequest) (*FavoriteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Favorite not implemented")
 }
 func (UnimplementedGoCounterServer) View(context.Context, *ViewRequest) (*ViewResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method View not implemented")
@@ -161,20 +161,20 @@ func _GoCounter_Like_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GoCounter_Collect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _GoCounter_Favorite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FavoriteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoCounterServer).Collect(ctx, in)
+		return srv.(GoCounterServer).Favorite(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GoCounter_Collect_FullMethodName,
+		FullMethod: GoCounter_Favorite_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoCounterServer).Collect(ctx, req.(*FavoriteRequest))
+		return srv.(GoCounterServer).Favorite(ctx, req.(*FavoriteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -213,8 +213,8 @@ var GoCounter_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _GoCounter_Like_Handler,
 		},
 		{
-			MethodName: "Collect",
-			Handler:    _GoCounter_Collect_Handler,
+			MethodName: "Favorite",
+			Handler:    _GoCounter_Favorite_Handler,
 		},
 		{
 			MethodName: "View",
