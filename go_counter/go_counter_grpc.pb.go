@@ -19,10 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	GoCounter_Ping_FullMethodName     = "/go_counter.Go_counter/Ping"
-	GoCounter_Like_FullMethodName     = "/go_counter.Go_counter/Like"
-	GoCounter_Favorite_FullMethodName = "/go_counter.Go_counter/Favorite"
-	GoCounter_View_FullMethodName     = "/go_counter.Go_counter/View"
+	GoCounter_Ping_FullMethodName           = "/go_counter.Go_counter/Ping"
+	GoCounter_Like_FullMethodName           = "/go_counter.Go_counter/Like"
+	GoCounter_LikeInsert_FullMethodName     = "/go_counter.Go_counter/LikeInsert"
+	GoCounter_Favorite_FullMethodName       = "/go_counter.Go_counter/Favorite"
+	GoCounter_FavoriteInsert_FullMethodName = "/go_counter.Go_counter/FavoriteInsert"
+	GoCounter_View_FullMethodName           = "/go_counter.Go_counter/View"
+	GoCounter_ViewInsert_FullMethodName     = "/go_counter.Go_counter/ViewInsert"
 )
 
 // GoCounterClient is the client API for GoCounter service.
@@ -32,10 +35,13 @@ type GoCounterClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error)
 	// 点赞请求
 	Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error)
+	LikeInsert(ctx context.Context, in *LikeInsertRequest, opts ...grpc.CallOption) (*LikeInsertResponse, error)
 	// 收藏请求
 	Favorite(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error)
+	FavoriteInsert(ctx context.Context, in *FavoriteInsertRequest, opts ...grpc.CallOption) (*FavoriteInsertResponse, error)
 	// 浏览请求
 	View(ctx context.Context, in *ViewRequest, opts ...grpc.CallOption) (*ViewResponse, error)
+	ViewInsert(ctx context.Context, in *ViewInsertRequest, opts ...grpc.CallOption) (*ViewInsertResponse, error)
 }
 
 type goCounterClient struct {
@@ -64,9 +70,27 @@ func (c *goCounterClient) Like(ctx context.Context, in *LikeRequest, opts ...grp
 	return out, nil
 }
 
+func (c *goCounterClient) LikeInsert(ctx context.Context, in *LikeInsertRequest, opts ...grpc.CallOption) (*LikeInsertResponse, error) {
+	out := new(LikeInsertResponse)
+	err := c.cc.Invoke(ctx, GoCounter_LikeInsert_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *goCounterClient) Favorite(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error) {
 	out := new(FavoriteResponse)
 	err := c.cc.Invoke(ctx, GoCounter_Favorite_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *goCounterClient) FavoriteInsert(ctx context.Context, in *FavoriteInsertRequest, opts ...grpc.CallOption) (*FavoriteInsertResponse, error) {
+	out := new(FavoriteInsertResponse)
+	err := c.cc.Invoke(ctx, GoCounter_FavoriteInsert_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -82,6 +106,15 @@ func (c *goCounterClient) View(ctx context.Context, in *ViewRequest, opts ...grp
 	return out, nil
 }
 
+func (c *goCounterClient) ViewInsert(ctx context.Context, in *ViewInsertRequest, opts ...grpc.CallOption) (*ViewInsertResponse, error) {
+	out := new(ViewInsertResponse)
+	err := c.cc.Invoke(ctx, GoCounter_ViewInsert_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GoCounterServer is the server API for GoCounter service.
 // All implementations must embed UnimplementedGoCounterServer
 // for forward compatibility
@@ -89,10 +122,13 @@ type GoCounterServer interface {
 	Ping(context.Context, *PingRequest) (*PingResponse, error)
 	// 点赞请求
 	Like(context.Context, *LikeRequest) (*LikeResponse, error)
+	LikeInsert(context.Context, *LikeInsertRequest) (*LikeInsertResponse, error)
 	// 收藏请求
 	Favorite(context.Context, *FavoriteRequest) (*FavoriteResponse, error)
+	FavoriteInsert(context.Context, *FavoriteInsertRequest) (*FavoriteInsertResponse, error)
 	// 浏览请求
 	View(context.Context, *ViewRequest) (*ViewResponse, error)
+	ViewInsert(context.Context, *ViewInsertRequest) (*ViewInsertResponse, error)
 	mustEmbedUnimplementedGoCounterServer()
 }
 
@@ -106,11 +142,20 @@ func (UnimplementedGoCounterServer) Ping(context.Context, *PingRequest) (*PingRe
 func (UnimplementedGoCounterServer) Like(context.Context, *LikeRequest) (*LikeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Like not implemented")
 }
+func (UnimplementedGoCounterServer) LikeInsert(context.Context, *LikeInsertRequest) (*LikeInsertResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LikeInsert not implemented")
+}
 func (UnimplementedGoCounterServer) Favorite(context.Context, *FavoriteRequest) (*FavoriteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Favorite not implemented")
 }
+func (UnimplementedGoCounterServer) FavoriteInsert(context.Context, *FavoriteInsertRequest) (*FavoriteInsertResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FavoriteInsert not implemented")
+}
 func (UnimplementedGoCounterServer) View(context.Context, *ViewRequest) (*ViewResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method View not implemented")
+}
+func (UnimplementedGoCounterServer) ViewInsert(context.Context, *ViewInsertRequest) (*ViewInsertResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewInsert not implemented")
 }
 func (UnimplementedGoCounterServer) mustEmbedUnimplementedGoCounterServer() {}
 
@@ -161,6 +206,24 @@ func _GoCounter_Like_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GoCounter_LikeInsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LikeInsertRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoCounterServer).LikeInsert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GoCounter_LikeInsert_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoCounterServer).LikeInsert(ctx, req.(*LikeInsertRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _GoCounter_Favorite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FavoriteRequest)
 	if err := dec(in); err != nil {
@@ -175,6 +238,24 @@ func _GoCounter_Favorite_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GoCounterServer).Favorite(ctx, req.(*FavoriteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GoCounter_FavoriteInsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FavoriteInsertRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoCounterServer).FavoriteInsert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GoCounter_FavoriteInsert_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoCounterServer).FavoriteInsert(ctx, req.(*FavoriteInsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -197,6 +278,24 @@ func _GoCounter_View_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GoCounter_ViewInsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewInsertRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoCounterServer).ViewInsert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GoCounter_ViewInsert_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoCounterServer).ViewInsert(ctx, req.(*ViewInsertRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GoCounter_ServiceDesc is the grpc.ServiceDesc for GoCounter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -213,12 +312,24 @@ var GoCounter_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _GoCounter_Like_Handler,
 		},
 		{
+			MethodName: "LikeInsert",
+			Handler:    _GoCounter_LikeInsert_Handler,
+		},
+		{
 			MethodName: "Favorite",
 			Handler:    _GoCounter_Favorite_Handler,
 		},
 		{
+			MethodName: "FavoriteInsert",
+			Handler:    _GoCounter_FavoriteInsert_Handler,
+		},
+		{
 			MethodName: "View",
 			Handler:    _GoCounter_View_Handler,
+		},
+		{
+			MethodName: "ViewInsert",
+			Handler:    _GoCounter_ViewInsert_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

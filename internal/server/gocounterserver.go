@@ -33,14 +33,29 @@ func (s *GoCounterServer) Like(ctx context.Context, in *go_counter.LikeRequest) 
 	return l.Like(in)
 }
 
+func (s *GoCounterServer) LikeInsert(ctx context.Context, in *go_counter.LikeInsertRequest) (*go_counter.LikeInsertResponse, error) {
+	l := logic.NewLikeInsertLogic(ctx, s.svcCtx)
+	return l.LikeInsert(in)
+}
+
 // 收藏请求
 func (s *GoCounterServer) Favorite(ctx context.Context, in *go_counter.FavoriteRequest) (*go_counter.FavoriteResponse, error) {
 	l := logic.NewFavoriteLogic(ctx, s.svcCtx)
 	return l.Favorite(in)
 }
 
+func (s *GoCounterServer) FavoriteInsert(ctx context.Context, in *go_counter.FavoriteInsertRequest) (*go_counter.FavoriteInsertResponse, error) {
+	l := logic.NewFavoriteInsertLogic(ctx, s.svcCtx)
+	return l.FavoriteInsert(in)
+}
+
 // 浏览请求
 func (s *GoCounterServer) View(ctx context.Context, in *go_counter.ViewRequest) (*go_counter.ViewResponse, error) {
 	l := logic.NewViewLogic(ctx, s.svcCtx)
 	return l.View(in)
+}
+
+func (s *GoCounterServer) ViewInsert(ctx context.Context, in *go_counter.ViewInsertRequest) (*go_counter.ViewInsertResponse, error) {
+	l := logic.NewViewInsertLogic(ctx, s.svcCtx)
+	return l.ViewInsert(in)
 }

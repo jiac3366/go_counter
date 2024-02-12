@@ -4,12 +4,9 @@ package logic
 
 import (
 	"context"
-	"go_counter/model/mysql"
-
+	"github.com/zeromicro/go-zero/core/logx"
 	"go_counter/go_counter"
 	"go_counter/internal/svc"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type FavoriteLogic struct {
@@ -26,20 +23,8 @@ func NewFavoriteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Favorite
 	}
 }
 
-// 收藏请求
 func (l *FavoriteLogic) Favorite(in *go_counter.FavoriteRequest) (*go_counter.FavoriteResponse, error) {
-	userId := in.UserId
-	articleId := in.ArticleId
-	if _, err := l.svcCtx.FavoritesModel.Insert(
-		l.ctx,
-		&mysql.Favorites{
-			UserId:    userId,
-			ArticleId: articleId,
-		},
-	); err != nil {
-		logx.Errorw("FavoritesModel.Insert failed", logx.Field("err", err.Error()))
-		return &go_counter.FavoriteResponse{Success: false}, nil
-	}
+	l.svcCtx.FavoritesModel.FindOne()
 
-	return &go_counter.FavoriteResponse{Success: true}, nil
+	return &go_counter.FavoriteResponse{}, nil
 }
