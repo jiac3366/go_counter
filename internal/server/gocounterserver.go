@@ -28,34 +28,34 @@ func (s *GoCounterServer) Ping(ctx context.Context, in *go_counter.PingRequest) 
 }
 
 // 点赞请求
-func (s *GoCounterServer) Like(ctx context.Context, in *go_counter.LikeRequest) (*go_counter.LikeResponse, error) {
-	l := logic.NewLikeLogic(ctx, s.svcCtx)
-	return l.Like(in)
+func (s *GoCounterServer) LikeNum(ctx context.Context, in *go_counter.LikeNumRequest) (*go_counter.LikeNumResponse, error) {
+	l := logic.NewLikeNumLogic(ctx, s.svcCtx)
+	return l.LikeNum(in)
 }
 
-func (s *GoCounterServer) LikeInsert(ctx context.Context, in *go_counter.LikeInsertRequest) (*go_counter.LikeInsertResponse, error) {
-	l := logic.NewLikeInsertLogic(ctx, s.svcCtx)
-	return l.LikeInsert(in)
+func (s *GoCounterServer) LikeRecord(ctx context.Context, in *go_counter.LikeRecordRequest) (*go_counter.LikeRecordResponse, error) {
+	l := logic.NewLikeRecordLogic(ctx, s.svcCtx)
+	return l.LikeRecord(in)
 }
 
 // 收藏请求
-func (s *GoCounterServer) Favorite(ctx context.Context, in *go_counter.FavoriteRequest) (*go_counter.FavoriteResponse, error) {
-	l := logic.NewFavoriteLogic(ctx, s.svcCtx)
-	return l.Favorite(in)
+func (s *GoCounterServer) FavoriteNum(ctx context.Context, in *go_counter.FavoriteNumRequest) (*go_counter.FavoriteNumResponse, error) {
+	l := logic.NewFavoriteNumLogic(ctx, s.svcCtx)
+	return l.FavoriteNum(in)
 }
 
-func (s *GoCounterServer) FavoriteInsert(ctx context.Context, in *go_counter.FavoriteInsertRequest) (*go_counter.FavoriteInsertResponse, error) {
-	l := logic.NewFavoriteInsertLogic(ctx, s.svcCtx)
-	return l.FavoriteInsert(in)
+func (s *GoCounterServer) FavoriteRecord(ctx context.Context, in *go_counter.FavoriteRecordRequest) (*go_counter.FavoriteRecordResponse, error) {
+	l := logic.NewFavoriteRecordLogic(ctx, s.svcCtx)
+	return l.FavoriteRecord(in)
 }
 
 // 浏览请求
-func (s *GoCounterServer) View(ctx context.Context, in *go_counter.ViewRequest) (*go_counter.ViewResponse, error) {
-	l := logic.NewViewLogic(ctx, s.svcCtx)
-	return l.View(in)
+func (s *GoCounterServer) ViewNum(ctx context.Context, in *go_counter.ViewNumRequest) (*go_counter.ViewNumResponse, error) {
+	l := logic.NewViewNumLogic(ctx, s.svcCtx)
+	return l.ViewNum(in)
 }
 
-func (s *GoCounterServer) ViewInsert(ctx context.Context, in *go_counter.ViewInsertRequest) (*go_counter.ViewInsertResponse, error) {
-	l := logic.NewViewInsertLogic(ctx, s.svcCtx)
-	return l.ViewInsert(in)
+func (s *GoCounterServer) ViewRecord(ctx context.Context, in *go_counter.ViewRecordRequest) (*go_counter.ViewRecordResponse, error) {
+	l := logic.NewViewRecordLogic(ctx, s.svcCtx)
+	return l.ViewRecord(in)
 }

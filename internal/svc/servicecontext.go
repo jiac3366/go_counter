@@ -7,19 +7,21 @@ import (
 )
 
 type ServiceContext struct {
-	Config         config.Config
-	FavoritesModel mysql.FavoritesModel
-	ArticleModel   mysql.ArticleModel
-	LikesModel     mysql.LikesModel
+	Config               config.Config
+	ArticleModel         mysql.ArticleModel
+	FavoritesRecordModel mysql.FavoritesRecordModel
+	LikesRecordModel     mysql.LikesRecordModel
+	CountMetaModel       mysql.CountMetaModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	mysqlConn := sqlx.NewMysql(c.MysqlConf.DSN)
 
 	return &ServiceContext{
-		Config:         c,
-		FavoritesModel: mysql.NewFavoritesModel(mysqlConn, c.RedisConf),
-		ArticleModel:   mysql.NewArticleModel(mysqlConn, c.RedisConf),
-		LikesModel:     mysql.NewLikesModel(mysqlConn, c.RedisConf),
+		Config:               c,
+		ArticleModel:         mysql.NewArticleModel(mysqlConn, c.RedisConf),
+		FavoritesRecordModel: mysql.NewFavoritesRecordModel(mysqlConn, c.RedisConf),
+		LikesRecordModel:     mysql.NewLikesRecordModel(mysqlConn, c.RedisConf),
+		CountMetaModel:       mysql.NewCountMetaModel(mysqlConn, c.RedisConf),
 	}
 }

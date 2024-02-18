@@ -11,59 +11,60 @@ message PingResponse {
   string pong = 1;
 }
 
-//
-message LikeRequest {
+
+message LikeNumRequest {
   int64 article_id = 1;
 }
 
-message LikeResponse {
+message LikeNumResponse {
   bool count = 1;
 }
 
-message LikeInsertRequest {
+message LikeRecordRequest {
   int64 user_id = 1;
   int64 article_id = 2;
 }
 
-message LikeInsertResponse {
+message LikeRecordResponse {
   bool success = 1;
 }
 
 // view the count of favorite
-message FavoriteRequest {
+message FavoriteNumRequest {
   int64 article_id = 1;
 }
 
-message FavoriteResponse {
+message FavoriteNumResponse {
   int64 count = 1;
 }
 
-// favorite operations
-message FavoriteInsertRequest {
+// favorite record operations
+message FavoriteRecordRequest {
   int64 user_id = 1;
   int64 article_id = 2;
 }
 
-message FavoriteInsertResponse {
-  bool success = 1;
-}
-
-//
-message ViewInsertRequest {
-  int64 user_id = 1;
-  int64 article_id = 2;
-}
-
-message ViewInsertResponse {
+message FavoriteRecordResponse {
   bool success = 1;
 }
 
 
-message ViewRequest {
+
+message ViewNumRequest {
   int64 article_id = 1;
 }
 
-message ViewResponse {
+message ViewNumResponse {
+  bool success = 1;
+}
+
+
+message ViewRecordRequest {
+  int64 user_id = 1;
+  int64 article_id = 2;
+}
+
+message ViewRecordResponse {
   bool success = 1;
 }
 
@@ -72,15 +73,15 @@ service Go_counter {
   rpc Ping(PingRequest) returns(PingResponse);
 
   // 点赞请求
-  rpc Like(LikeRequest) returns (LikeResponse);
-  rpc LikeInsert(LikeInsertRequest) returns (LikeInsertResponse);
+  rpc LikeNum(LikeNumRequest) returns (LikeNumResponse);
+  rpc LikeRecord(LikeRecordRequest) returns (LikeRecordResponse);
 
   // 收藏请求
-  rpc Favorite(FavoriteRequest) returns (FavoriteResponse);
-  rpc FavoriteInsert(FavoriteInsertRequest) returns (FavoriteInsertResponse);
+  rpc FavoriteNum(FavoriteNumRequest) returns (FavoriteNumResponse);
+  rpc FavoriteRecord(FavoriteRecordRequest) returns (FavoriteRecordResponse);
 
   // 浏览请求
-  rpc View(ViewRequest) returns (ViewResponse);
-  rpc ViewInsert(ViewInsertRequest) returns (ViewInsertResponse);
+  rpc ViewNum(ViewNumRequest) returns (ViewNumResponse);
+  rpc ViewRecord(ViewRecordRequest) returns (ViewRecordResponse);
 }
 

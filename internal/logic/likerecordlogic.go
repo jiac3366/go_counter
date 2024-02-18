@@ -9,22 +9,22 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type ViewInsertLogic struct {
+type LikeRecordLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewViewInsertLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ViewInsertLogic {
-	return &ViewInsertLogic{
+func NewLikeRecordLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LikeRecordLogic {
+	return &LikeRecordLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *ViewInsertLogic) ViewInsert(in *go_counter.ViewInsertRequest) (*go_counter.ViewInsertResponse, error) {
+func (l *LikeRecordLogic) LikeRecord(in *go_counter.LikeRecordRequest) (*go_counter.LikeRecordResponse, error) {
 	// todo: add your logic here and delete this line
 
-	return &go_counter.ViewInsertResponse{}, nil
+	return &go_counter.LikeRecordResponse{}, nil
 }

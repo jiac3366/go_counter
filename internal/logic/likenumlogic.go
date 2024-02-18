@@ -9,22 +9,23 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type LikeInsertLogic struct {
+type LikeNumLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewLikeInsertLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LikeInsertLogic {
-	return &LikeInsertLogic{
+func NewLikeNumLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LikeNumLogic {
+	return &LikeNumLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *LikeInsertLogic) LikeInsert(in *go_counter.LikeInsertRequest) (*go_counter.LikeInsertResponse, error) {
+// 点赞请求
+func (l *LikeNumLogic) LikeNum(in *go_counter.LikeNumRequest) (*go_counter.LikeNumResponse, error) {
 	// todo: add your logic here and delete this line
 
-	return &go_counter.LikeInsertResponse{}, nil
+	return &go_counter.LikeNumResponse{}, nil
 }

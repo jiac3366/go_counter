@@ -13,32 +13,32 @@ import (
 )
 
 type (
-	FavoriteInsertRequest  = go_counter.FavoriteInsertRequest
-	FavoriteInsertResponse = go_counter.FavoriteInsertResponse
-	FavoriteRequest        = go_counter.FavoriteRequest
-	FavoriteResponse       = go_counter.FavoriteResponse
-	LikeInsertRequest      = go_counter.LikeInsertRequest
-	LikeInsertResponse     = go_counter.LikeInsertResponse
-	LikeRequest            = go_counter.LikeRequest
-	LikeResponse           = go_counter.LikeResponse
+	FavoriteNumRequest     = go_counter.FavoriteNumRequest
+	FavoriteNumResponse    = go_counter.FavoriteNumResponse
+	FavoriteRecordRequest  = go_counter.FavoriteRecordRequest
+	FavoriteRecordResponse = go_counter.FavoriteRecordResponse
+	LikeNumRequest         = go_counter.LikeNumRequest
+	LikeNumResponse        = go_counter.LikeNumResponse
+	LikeRecordRequest      = go_counter.LikeRecordRequest
+	LikeRecordResponse     = go_counter.LikeRecordResponse
 	PingRequest            = go_counter.PingRequest
 	PingResponse           = go_counter.PingResponse
-	ViewInsertRequest      = go_counter.ViewInsertRequest
-	ViewInsertResponse     = go_counter.ViewInsertResponse
-	ViewRequest            = go_counter.ViewRequest
-	ViewResponse           = go_counter.ViewResponse
+	ViewNumRequest         = go_counter.ViewNumRequest
+	ViewNumResponse        = go_counter.ViewNumResponse
+	ViewRecordRequest      = go_counter.ViewRecordRequest
+	ViewRecordResponse     = go_counter.ViewRecordResponse
 
 	GoCounter interface {
 		Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error)
 		// 点赞请求
-		Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error)
-		LikeInsert(ctx context.Context, in *LikeInsertRequest, opts ...grpc.CallOption) (*LikeInsertResponse, error)
+		LikeNum(ctx context.Context, in *LikeNumRequest, opts ...grpc.CallOption) (*LikeNumResponse, error)
+		LikeRecord(ctx context.Context, in *LikeRecordRequest, opts ...grpc.CallOption) (*LikeRecordResponse, error)
 		// 收藏请求
-		Favorite(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error)
-		FavoriteInsert(ctx context.Context, in *FavoriteInsertRequest, opts ...grpc.CallOption) (*FavoriteInsertResponse, error)
+		FavoriteNum(ctx context.Context, in *FavoriteNumRequest, opts ...grpc.CallOption) (*FavoriteNumResponse, error)
+		FavoriteRecord(ctx context.Context, in *FavoriteRecordRequest, opts ...grpc.CallOption) (*FavoriteRecordResponse, error)
 		// 浏览请求
-		View(ctx context.Context, in *ViewRequest, opts ...grpc.CallOption) (*ViewResponse, error)
-		ViewInsert(ctx context.Context, in *ViewInsertRequest, opts ...grpc.CallOption) (*ViewInsertResponse, error)
+		ViewNum(ctx context.Context, in *ViewNumRequest, opts ...grpc.CallOption) (*ViewNumResponse, error)
+		ViewRecord(ctx context.Context, in *ViewRecordRequest, opts ...grpc.CallOption) (*ViewRecordResponse, error)
 	}
 
 	defaultGoCounter struct {
@@ -58,34 +58,34 @@ func (m *defaultGoCounter) Ping(ctx context.Context, in *PingRequest, opts ...gr
 }
 
 // 点赞请求
-func (m *defaultGoCounter) Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error) {
+func (m *defaultGoCounter) LikeNum(ctx context.Context, in *LikeNumRequest, opts ...grpc.CallOption) (*LikeNumResponse, error) {
 	client := go_counter.NewGoCounterClient(m.cli.Conn())
-	return client.Like(ctx, in, opts...)
+	return client.LikeNum(ctx, in, opts...)
 }
 
-func (m *defaultGoCounter) LikeInsert(ctx context.Context, in *LikeInsertRequest, opts ...grpc.CallOption) (*LikeInsertResponse, error) {
+func (m *defaultGoCounter) LikeRecord(ctx context.Context, in *LikeRecordRequest, opts ...grpc.CallOption) (*LikeRecordResponse, error) {
 	client := go_counter.NewGoCounterClient(m.cli.Conn())
-	return client.LikeInsert(ctx, in, opts...)
+	return client.LikeRecord(ctx, in, opts...)
 }
 
 // 收藏请求
-func (m *defaultGoCounter) Favorite(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error) {
+func (m *defaultGoCounter) FavoriteNum(ctx context.Context, in *FavoriteNumRequest, opts ...grpc.CallOption) (*FavoriteNumResponse, error) {
 	client := go_counter.NewGoCounterClient(m.cli.Conn())
-	return client.Favorite(ctx, in, opts...)
+	return client.FavoriteNum(ctx, in, opts...)
 }
 
-func (m *defaultGoCounter) FavoriteInsert(ctx context.Context, in *FavoriteInsertRequest, opts ...grpc.CallOption) (*FavoriteInsertResponse, error) {
+func (m *defaultGoCounter) FavoriteRecord(ctx context.Context, in *FavoriteRecordRequest, opts ...grpc.CallOption) (*FavoriteRecordResponse, error) {
 	client := go_counter.NewGoCounterClient(m.cli.Conn())
-	return client.FavoriteInsert(ctx, in, opts...)
+	return client.FavoriteRecord(ctx, in, opts...)
 }
 
 // 浏览请求
-func (m *defaultGoCounter) View(ctx context.Context, in *ViewRequest, opts ...grpc.CallOption) (*ViewResponse, error) {
+func (m *defaultGoCounter) ViewNum(ctx context.Context, in *ViewNumRequest, opts ...grpc.CallOption) (*ViewNumResponse, error) {
 	client := go_counter.NewGoCounterClient(m.cli.Conn())
-	return client.View(ctx, in, opts...)
+	return client.ViewNum(ctx, in, opts...)
 }
 
-func (m *defaultGoCounter) ViewInsert(ctx context.Context, in *ViewInsertRequest, opts ...grpc.CallOption) (*ViewInsertResponse, error) {
+func (m *defaultGoCounter) ViewRecord(ctx context.Context, in *ViewRecordRequest, opts ...grpc.CallOption) (*ViewRecordResponse, error) {
 	client := go_counter.NewGoCounterClient(m.cli.Conn())
-	return client.ViewInsert(ctx, in, opts...)
+	return client.ViewRecord(ctx, in, opts...)
 }

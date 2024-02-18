@@ -20,12 +20,12 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	GoCounter_Ping_FullMethodName           = "/go_counter.Go_counter/Ping"
-	GoCounter_Like_FullMethodName           = "/go_counter.Go_counter/Like"
-	GoCounter_LikeInsert_FullMethodName     = "/go_counter.Go_counter/LikeInsert"
-	GoCounter_Favorite_FullMethodName       = "/go_counter.Go_counter/Favorite"
-	GoCounter_FavoriteInsert_FullMethodName = "/go_counter.Go_counter/FavoriteInsert"
-	GoCounter_View_FullMethodName           = "/go_counter.Go_counter/View"
-	GoCounter_ViewInsert_FullMethodName     = "/go_counter.Go_counter/ViewInsert"
+	GoCounter_LikeNum_FullMethodName        = "/go_counter.Go_counter/LikeNum"
+	GoCounter_LikeRecord_FullMethodName     = "/go_counter.Go_counter/LikeRecord"
+	GoCounter_FavoriteNum_FullMethodName    = "/go_counter.Go_counter/FavoriteNum"
+	GoCounter_FavoriteRecord_FullMethodName = "/go_counter.Go_counter/FavoriteRecord"
+	GoCounter_ViewNum_FullMethodName        = "/go_counter.Go_counter/ViewNum"
+	GoCounter_ViewRecord_FullMethodName     = "/go_counter.Go_counter/ViewRecord"
 )
 
 // GoCounterClient is the client API for GoCounter service.
@@ -34,14 +34,14 @@ const (
 type GoCounterClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error)
 	// 点赞请求
-	Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error)
-	LikeInsert(ctx context.Context, in *LikeInsertRequest, opts ...grpc.CallOption) (*LikeInsertResponse, error)
+	LikeNum(ctx context.Context, in *LikeNumRequest, opts ...grpc.CallOption) (*LikeNumResponse, error)
+	LikeRecord(ctx context.Context, in *LikeRecordRequest, opts ...grpc.CallOption) (*LikeRecordResponse, error)
 	// 收藏请求
-	Favorite(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error)
-	FavoriteInsert(ctx context.Context, in *FavoriteInsertRequest, opts ...grpc.CallOption) (*FavoriteInsertResponse, error)
+	FavoriteNum(ctx context.Context, in *FavoriteNumRequest, opts ...grpc.CallOption) (*FavoriteNumResponse, error)
+	FavoriteRecord(ctx context.Context, in *FavoriteRecordRequest, opts ...grpc.CallOption) (*FavoriteRecordResponse, error)
 	// 浏览请求
-	View(ctx context.Context, in *ViewRequest, opts ...grpc.CallOption) (*ViewResponse, error)
-	ViewInsert(ctx context.Context, in *ViewInsertRequest, opts ...grpc.CallOption) (*ViewInsertResponse, error)
+	ViewNum(ctx context.Context, in *ViewNumRequest, opts ...grpc.CallOption) (*ViewNumResponse, error)
+	ViewRecord(ctx context.Context, in *ViewRecordRequest, opts ...grpc.CallOption) (*ViewRecordResponse, error)
 }
 
 type goCounterClient struct {
@@ -61,54 +61,54 @@ func (c *goCounterClient) Ping(ctx context.Context, in *PingRequest, opts ...grp
 	return out, nil
 }
 
-func (c *goCounterClient) Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error) {
-	out := new(LikeResponse)
-	err := c.cc.Invoke(ctx, GoCounter_Like_FullMethodName, in, out, opts...)
+func (c *goCounterClient) LikeNum(ctx context.Context, in *LikeNumRequest, opts ...grpc.CallOption) (*LikeNumResponse, error) {
+	out := new(LikeNumResponse)
+	err := c.cc.Invoke(ctx, GoCounter_LikeNum_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *goCounterClient) LikeInsert(ctx context.Context, in *LikeInsertRequest, opts ...grpc.CallOption) (*LikeInsertResponse, error) {
-	out := new(LikeInsertResponse)
-	err := c.cc.Invoke(ctx, GoCounter_LikeInsert_FullMethodName, in, out, opts...)
+func (c *goCounterClient) LikeRecord(ctx context.Context, in *LikeRecordRequest, opts ...grpc.CallOption) (*LikeRecordResponse, error) {
+	out := new(LikeRecordResponse)
+	err := c.cc.Invoke(ctx, GoCounter_LikeRecord_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *goCounterClient) Favorite(ctx context.Context, in *FavoriteRequest, opts ...grpc.CallOption) (*FavoriteResponse, error) {
-	out := new(FavoriteResponse)
-	err := c.cc.Invoke(ctx, GoCounter_Favorite_FullMethodName, in, out, opts...)
+func (c *goCounterClient) FavoriteNum(ctx context.Context, in *FavoriteNumRequest, opts ...grpc.CallOption) (*FavoriteNumResponse, error) {
+	out := new(FavoriteNumResponse)
+	err := c.cc.Invoke(ctx, GoCounter_FavoriteNum_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *goCounterClient) FavoriteInsert(ctx context.Context, in *FavoriteInsertRequest, opts ...grpc.CallOption) (*FavoriteInsertResponse, error) {
-	out := new(FavoriteInsertResponse)
-	err := c.cc.Invoke(ctx, GoCounter_FavoriteInsert_FullMethodName, in, out, opts...)
+func (c *goCounterClient) FavoriteRecord(ctx context.Context, in *FavoriteRecordRequest, opts ...grpc.CallOption) (*FavoriteRecordResponse, error) {
+	out := new(FavoriteRecordResponse)
+	err := c.cc.Invoke(ctx, GoCounter_FavoriteRecord_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *goCounterClient) View(ctx context.Context, in *ViewRequest, opts ...grpc.CallOption) (*ViewResponse, error) {
-	out := new(ViewResponse)
-	err := c.cc.Invoke(ctx, GoCounter_View_FullMethodName, in, out, opts...)
+func (c *goCounterClient) ViewNum(ctx context.Context, in *ViewNumRequest, opts ...grpc.CallOption) (*ViewNumResponse, error) {
+	out := new(ViewNumResponse)
+	err := c.cc.Invoke(ctx, GoCounter_ViewNum_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *goCounterClient) ViewInsert(ctx context.Context, in *ViewInsertRequest, opts ...grpc.CallOption) (*ViewInsertResponse, error) {
-	out := new(ViewInsertResponse)
-	err := c.cc.Invoke(ctx, GoCounter_ViewInsert_FullMethodName, in, out, opts...)
+func (c *goCounterClient) ViewRecord(ctx context.Context, in *ViewRecordRequest, opts ...grpc.CallOption) (*ViewRecordResponse, error) {
+	out := new(ViewRecordResponse)
+	err := c.cc.Invoke(ctx, GoCounter_ViewRecord_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -121,14 +121,14 @@ func (c *goCounterClient) ViewInsert(ctx context.Context, in *ViewInsertRequest,
 type GoCounterServer interface {
 	Ping(context.Context, *PingRequest) (*PingResponse, error)
 	// 点赞请求
-	Like(context.Context, *LikeRequest) (*LikeResponse, error)
-	LikeInsert(context.Context, *LikeInsertRequest) (*LikeInsertResponse, error)
+	LikeNum(context.Context, *LikeNumRequest) (*LikeNumResponse, error)
+	LikeRecord(context.Context, *LikeRecordRequest) (*LikeRecordResponse, error)
 	// 收藏请求
-	Favorite(context.Context, *FavoriteRequest) (*FavoriteResponse, error)
-	FavoriteInsert(context.Context, *FavoriteInsertRequest) (*FavoriteInsertResponse, error)
+	FavoriteNum(context.Context, *FavoriteNumRequest) (*FavoriteNumResponse, error)
+	FavoriteRecord(context.Context, *FavoriteRecordRequest) (*FavoriteRecordResponse, error)
 	// 浏览请求
-	View(context.Context, *ViewRequest) (*ViewResponse, error)
-	ViewInsert(context.Context, *ViewInsertRequest) (*ViewInsertResponse, error)
+	ViewNum(context.Context, *ViewNumRequest) (*ViewNumResponse, error)
+	ViewRecord(context.Context, *ViewRecordRequest) (*ViewRecordResponse, error)
 	mustEmbedUnimplementedGoCounterServer()
 }
 
@@ -139,23 +139,23 @@ type UnimplementedGoCounterServer struct {
 func (UnimplementedGoCounterServer) Ping(context.Context, *PingRequest) (*PingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
-func (UnimplementedGoCounterServer) Like(context.Context, *LikeRequest) (*LikeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Like not implemented")
+func (UnimplementedGoCounterServer) LikeNum(context.Context, *LikeNumRequest) (*LikeNumResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LikeNum not implemented")
 }
-func (UnimplementedGoCounterServer) LikeInsert(context.Context, *LikeInsertRequest) (*LikeInsertResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LikeInsert not implemented")
+func (UnimplementedGoCounterServer) LikeRecord(context.Context, *LikeRecordRequest) (*LikeRecordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LikeRecord not implemented")
 }
-func (UnimplementedGoCounterServer) Favorite(context.Context, *FavoriteRequest) (*FavoriteResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Favorite not implemented")
+func (UnimplementedGoCounterServer) FavoriteNum(context.Context, *FavoriteNumRequest) (*FavoriteNumResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FavoriteNum not implemented")
 }
-func (UnimplementedGoCounterServer) FavoriteInsert(context.Context, *FavoriteInsertRequest) (*FavoriteInsertResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FavoriteInsert not implemented")
+func (UnimplementedGoCounterServer) FavoriteRecord(context.Context, *FavoriteRecordRequest) (*FavoriteRecordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FavoriteRecord not implemented")
 }
-func (UnimplementedGoCounterServer) View(context.Context, *ViewRequest) (*ViewResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method View not implemented")
+func (UnimplementedGoCounterServer) ViewNum(context.Context, *ViewNumRequest) (*ViewNumResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewNum not implemented")
 }
-func (UnimplementedGoCounterServer) ViewInsert(context.Context, *ViewInsertRequest) (*ViewInsertResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ViewInsert not implemented")
+func (UnimplementedGoCounterServer) ViewRecord(context.Context, *ViewRecordRequest) (*ViewRecordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewRecord not implemented")
 }
 func (UnimplementedGoCounterServer) mustEmbedUnimplementedGoCounterServer() {}
 
@@ -188,110 +188,110 @@ func _GoCounter_Ping_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GoCounter_Like_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LikeRequest)
+func _GoCounter_LikeNum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LikeNumRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoCounterServer).Like(ctx, in)
+		return srv.(GoCounterServer).LikeNum(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GoCounter_Like_FullMethodName,
+		FullMethod: GoCounter_LikeNum_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoCounterServer).Like(ctx, req.(*LikeRequest))
+		return srv.(GoCounterServer).LikeNum(ctx, req.(*LikeNumRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GoCounter_LikeInsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LikeInsertRequest)
+func _GoCounter_LikeRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LikeRecordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoCounterServer).LikeInsert(ctx, in)
+		return srv.(GoCounterServer).LikeRecord(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GoCounter_LikeInsert_FullMethodName,
+		FullMethod: GoCounter_LikeRecord_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoCounterServer).LikeInsert(ctx, req.(*LikeInsertRequest))
+		return srv.(GoCounterServer).LikeRecord(ctx, req.(*LikeRecordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GoCounter_Favorite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FavoriteRequest)
+func _GoCounter_FavoriteNum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FavoriteNumRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoCounterServer).Favorite(ctx, in)
+		return srv.(GoCounterServer).FavoriteNum(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GoCounter_Favorite_FullMethodName,
+		FullMethod: GoCounter_FavoriteNum_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoCounterServer).Favorite(ctx, req.(*FavoriteRequest))
+		return srv.(GoCounterServer).FavoriteNum(ctx, req.(*FavoriteNumRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GoCounter_FavoriteInsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FavoriteInsertRequest)
+func _GoCounter_FavoriteRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FavoriteRecordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoCounterServer).FavoriteInsert(ctx, in)
+		return srv.(GoCounterServer).FavoriteRecord(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GoCounter_FavoriteInsert_FullMethodName,
+		FullMethod: GoCounter_FavoriteRecord_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoCounterServer).FavoriteInsert(ctx, req.(*FavoriteInsertRequest))
+		return srv.(GoCounterServer).FavoriteRecord(ctx, req.(*FavoriteRecordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GoCounter_View_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ViewRequest)
+func _GoCounter_ViewNum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewNumRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoCounterServer).View(ctx, in)
+		return srv.(GoCounterServer).ViewNum(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GoCounter_View_FullMethodName,
+		FullMethod: GoCounter_ViewNum_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoCounterServer).View(ctx, req.(*ViewRequest))
+		return srv.(GoCounterServer).ViewNum(ctx, req.(*ViewNumRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GoCounter_ViewInsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ViewInsertRequest)
+func _GoCounter_ViewRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewRecordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoCounterServer).ViewInsert(ctx, in)
+		return srv.(GoCounterServer).ViewRecord(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GoCounter_ViewInsert_FullMethodName,
+		FullMethod: GoCounter_ViewRecord_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoCounterServer).ViewInsert(ctx, req.(*ViewInsertRequest))
+		return srv.(GoCounterServer).ViewRecord(ctx, req.(*ViewRecordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -308,28 +308,28 @@ var GoCounter_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _GoCounter_Ping_Handler,
 		},
 		{
-			MethodName: "Like",
-			Handler:    _GoCounter_Like_Handler,
+			MethodName: "LikeNum",
+			Handler:    _GoCounter_LikeNum_Handler,
 		},
 		{
-			MethodName: "LikeInsert",
-			Handler:    _GoCounter_LikeInsert_Handler,
+			MethodName: "LikeRecord",
+			Handler:    _GoCounter_LikeRecord_Handler,
 		},
 		{
-			MethodName: "Favorite",
-			Handler:    _GoCounter_Favorite_Handler,
+			MethodName: "FavoriteNum",
+			Handler:    _GoCounter_FavoriteNum_Handler,
 		},
 		{
-			MethodName: "FavoriteInsert",
-			Handler:    _GoCounter_FavoriteInsert_Handler,
+			MethodName: "FavoriteRecord",
+			Handler:    _GoCounter_FavoriteRecord_Handler,
 		},
 		{
-			MethodName: "View",
-			Handler:    _GoCounter_View_Handler,
+			MethodName: "ViewNum",
+			Handler:    _GoCounter_ViewNum_Handler,
 		},
 		{
-			MethodName: "ViewInsert",
-			Handler:    _GoCounter_ViewInsert_Handler,
+			MethodName: "ViewRecord",
+			Handler:    _GoCounter_ViewRecord_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

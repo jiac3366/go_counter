@@ -9,23 +9,22 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type ViewLogic struct {
+type ViewRecordLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewViewLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ViewLogic {
-	return &ViewLogic{
+func NewViewRecordLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ViewRecordLogic {
+	return &ViewRecordLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-// 浏览请求
-func (l *ViewLogic) View(in *go_counter.ViewRequest) (*go_counter.ViewResponse, error) {
+func (l *ViewRecordLogic) ViewRecord(in *go_counter.ViewRecordRequest) (*go_counter.ViewRecordResponse, error) {
 	// todo: add your logic here and delete this line
 
-	return &go_counter.ViewResponse{}, nil
+	return &go_counter.ViewRecordResponse{}, nil
 }
