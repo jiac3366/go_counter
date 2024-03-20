@@ -24,18 +24,32 @@ func NewFavoriteRecordLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Fa
 	}
 }
 
-func (l *FavoriteRecordLogic) FavoriteRecord(in *go_counter.FavoriteRecordRequest) (*go_counter.FavoriteRecordResponse, error) {
-	userId := in.UserId
-	articleId := in.ArticleId
+func (l *FavoriteRecordLogic) FavoriteRecordV1(in *go_counter.FavoriteRecordRequest) (*go_counter.FavoriteRecordResponse, error) {
+	// todo: transaction
 	if _, err := l.svcCtx.FavoritesRecordModel.Insert(
 		l.ctx,
 		&mysql.FavoritesRecord{
-			UserId:    userId,
-			ArticleId: articleId,
+			UserId:    in.UserId,
+			ArticleId: in.ArticleId,
 		},
 	); err != nil {
 		logx.Errorw("FavoritesModel.Insert failed", logx.Field("err", err.Error()))
 		return &go_counter.FavoriteRecordResponse{Success: false}, nil
 	}
+
+	// 有并发问题：
+	//entry, _ := l.svcCtx.CountMetaModel.FindOneByBusinessIdTypes(l.ctx, in.ArticleId, "FAVORITE")
+	//if err != nil {
+	//	...
+	//}
+
+	//entry.Count += 1
+	//err := l.svcCtx.CountMetaModel.Update(
+	//	l.ctx,
+	//	entry,
+	//)
+
+	// v1 for update
+
 	return &go_counter.FavoriteRecordResponse{Success: true}, nil
 }

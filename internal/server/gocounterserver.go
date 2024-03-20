@@ -46,7 +46,7 @@ func (s *GoCounterServer) FavoriteNum(ctx context.Context, in *go_counter.Favori
 
 func (s *GoCounterServer) FavoriteRecord(ctx context.Context, in *go_counter.FavoriteRecordRequest) (*go_counter.FavoriteRecordResponse, error) {
 	l := logic.NewFavoriteRecordLogic(ctx, s.svcCtx)
-	return l.FavoriteRecord(in)
+	return l.FavoriteRecordV1(in)
 }
 
 // 浏览请求

@@ -58,7 +58,8 @@ CREATE TABLE favorites
     PRIMARY KEY (favorite_id)
 );
 ```
-2. goctl model mysql ddl --src ddl.sql --dir . -c
+2. cd model && goctl model mysql ddl --src ddl.sql --dir ./mysql -c
+
 3. define .proto file
 ```protobuf
 syntax = "proto3";
@@ -115,7 +116,6 @@ service Go_counter {
   // 浏览请求
   rpc View(ViewRequest) returns (ViewResponse);
 }
-
 ```
 4. goctl rpc protoc go_counter.proto --go_out=. --go-grpc_out=. --zrpc_out=.
 5. 

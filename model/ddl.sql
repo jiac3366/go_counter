@@ -23,7 +23,7 @@ CREATE TABLE likes_record
     user_id    bigint NOT NULL,
     article_id bigint NOT NULL,
     created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-    UNIQUE KEY idx_uniq_user_id (user_id),
+    UNIQUE KEY idx_uniq_user_id_article_id (user_id, article_id),
     PRIMARY KEY (like_id)
 );
 
@@ -35,7 +35,7 @@ CREATE TABLE favorites_record
     user_id     bigint NOT NULL,
     article_id  bigint NOT NULL,
     created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-    UNIQUE KEY idx_uniq_user_id (user_id),
+    UNIQUE KEY idx_uniq_user_id_article_id (user_id, article_id),
     PRIMARY KEY (favorite_id)
 );
 
@@ -43,7 +43,9 @@ CREATE TABLE favorites_record
 CREATE TABLE count_meta
 (
     id  bigint NOT NULL,
+    business_id bigint NOT NULL,  -- same as article_id
     count bigint NOT NULL,
     types VARCHAR(32) NOT NULL,
+    UNIQUE KEY idx_uniq_business_id (business_id, types), -- article_id_1, "FAVORITE" 代表 id 为 1 的文章点赞数
     PRIMARY KEY (id)
 );

@@ -45,3 +45,5 @@ Godeps/_workspace/
 
 # Ignoring all the binary files
 *.bin
+
+/chase/

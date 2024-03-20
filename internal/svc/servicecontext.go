@@ -12,12 +12,14 @@ type ServiceContext struct {
 	FavoritesRecordModel mysql.FavoritesRecordModel
 	LikesRecordModel     mysql.LikesRecordModel
 	CountMetaModel       mysql.CountMetaModel
+	SqlxConn             sqlx.SqlConn
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	mysqlConn := sqlx.NewMysql(c.MysqlConf.DSN)
 
 	return &ServiceContext{
+		SqlxConn:             mysqlConn,
 		Config:               c,
 		ArticleModel:         mysql.NewArticleModel(mysqlConn, c.RedisConf),
 		FavoritesRecordModel: mysql.NewFavoritesRecordModel(mysqlConn, c.RedisConf),
