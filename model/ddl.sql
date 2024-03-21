@@ -42,7 +42,7 @@ CREATE TABLE favorites_record
 -- 计数表
 CREATE TABLE count_meta
 (
-    id  bigint NOT NULL,
+    id  bigint NOT NULL auto_increment,
     business_id bigint NOT NULL,  -- same as article_id
     count bigint NOT NULL,
     types VARCHAR(32) NOT NULL,
