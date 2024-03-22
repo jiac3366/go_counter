@@ -23,7 +23,7 @@
 -- 用户信息表
 CREATE TABLE user
 (
-    user_id  bigint AUTO_INCREMENT,
+    user_id  bigint NOT NULL AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL DEFAULT '',
     PRIMARY KEY (user_id)
 );
@@ -31,32 +31,47 @@ CREATE TABLE user
 -- 文章信息表
 CREATE TABLE article
 (
-    article_id bigint AUTO_INCREMENT,
+    article_id bigint NOT NULL AUTO_INCREMENT,
     title      VARCHAR(255) NOT NULL DEFAULT '',
     content    TEXT         NOT NULL DEFAULT '',
     author_id  bigint       NOT NULL,
     PRIMARY KEY (article_id)
 );
 
--- 点赞信息表
-CREATE TABLE likes
+-- 点赞记录表
+CREATE TABLE likes_record
 (
-    like_id    bigint AUTO_INCREMENT,
+    like_id    bigint NOT NULL AUTO_INCREMENT,
     user_id    bigint NOT NULL,
     article_id bigint NOT NULL,
     created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-    PRIMARY KEY (article_id)
+    UNIQUE KEY idx_uniq_user_id_article_id (user_id, article_id),
+    PRIMARY KEY (like_id)
 );
 
--- 收藏信息表
-CREATE TABLE favorites
+
+-- 收藏记录表
+CREATE TABLE favorites_record
 (
-    favorite_id bigint AUTO_INCREMENT,
+    favorite_id bigint NOT NULL AUTO_INCREMENT,
     user_id     bigint NOT NULL,
     article_id  bigint NOT NULL,
     created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    UNIQUE KEY idx_uniq_user_id_article_id (user_id, article_id),
     PRIMARY KEY (favorite_id)
 );
+
+-- 计数表
+CREATE TABLE count_meta
+(
+    id  bigint NOT NULL auto_increment,
+    business_id bigint NOT NULL,  -- same as article_id
+    count bigint NOT NULL,
+    types VARCHAR(32) NOT NULL,
+    UNIQUE KEY idx_uniq_business_id (business_id, types), -- article_id_1, "FAVORITE" 代表 id 为 1 的文章点赞数
+    PRIMARY KEY (id)
+);
+
 ```
 2. cd model && goctl model mysql ddl --src ddl.sql --dir ./mysql -c
 
@@ -76,30 +91,59 @@ message PingResponse {
 }
 
 
-message LikeRequest {
-  string user_id = 1;
-  string content_id = 2;
+message LikeNumRequest {
+  int64 article_id = 1;
 }
 
-message LikeResponse {
+message LikeNumResponse {
+  bool count = 1;
+}
+
+message LikeRecordRequest {
+  int64 user_id = 1;
+  int64 article_id = 2;
+}
+
+message LikeRecordResponse {
   bool success = 1;
 }
 
-message FavoriteRequest {
-  string user_id = 1;
-  string content_id = 2;
+// view the count of favorite
+message FavoriteNumRequest {
+  int64 article_id = 1;
 }
 
-message FavoriteResponse {
+message FavoriteNumResponse {
+  int64 count = 1;
+}
+
+// favorite record operations
+message FavoriteRecordRequest {
+  int64 user_id = 1;
+  int64 article_id = 2;
+}
+
+message FavoriteRecordResponse {
   bool success = 1;
 }
 
-message ViewRequest {
-  string user_id = 1;
-  string content_id = 2;
+
+
+message ViewNumRequest {
+  int64 article_id = 1;
 }
 
-message ViewResponse {
+message ViewNumResponse {
+  bool success = 1;
+}
+
+
+message ViewRecordRequest {
+  int64 user_id = 1;
+  int64 article_id = 2;
+}
+
+message ViewRecordResponse {
   bool success = 1;
 }
 
@@ -108,14 +152,16 @@ service Go_counter {
   rpc Ping(PingRequest) returns(PingResponse);
 
   // 点赞请求
-  rpc Like(LikeRequest) returns (LikeResponse);
+  rpc LikeNum(LikeNumRequest) returns (LikeNumResponse);
+  rpc LikeRecord(LikeRecordRequest) returns (LikeRecordResponse);
 
   // 收藏请求
-  rpc Favorite(FavoriteRequest) returns (FavoriteResponse);
+  rpc FavoriteNum(FavoriteNumRequest) returns (FavoriteNumResponse);
+  rpc FavoriteRecord(FavoriteRecordRequest) returns (FavoriteRecordResponse);
 
   // 浏览请求
-  rpc View(ViewRequest) returns (ViewResponse);
+  rpc ViewNum(ViewNumRequest) returns (ViewNumResponse);
+  rpc ViewRecord(ViewRecordRequest) returns (ViewRecordResponse);
 }
 ```
 4. goctl rpc protoc go_counter.proto --go_out=. --go-grpc_out=. --zrpc_out=.
-5. 
